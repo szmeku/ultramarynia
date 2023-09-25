@@ -33,3 +33,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.idea/
+
+/test-results/
+/playwright-report/
+/playwright/.cache/
+playwright/.auth
+./browser-session.json
+./service-key.json
+./secrets.json
