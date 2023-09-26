@@ -6,10 +6,13 @@ const EventsGroup = ({events, light}) => {
     const backgroundColor = light ? '#f2f2f2' : '#e6e6e6';
 
     return <div style={{backgroundColor, padding: 10, color: 'black'}}>
-        <span style={{fontSize: 20, weight: 'bold'}}>{events[0].dayOfTheWeekPl}</span> {events[0].datePl}
-        <ul style={{listStyleType: 'none', margin: 0, padding: 0}}>
-            {events.map(event => <li key={event.title} style={{padding: 5}}>
-                {event.hourPl} <a href={event.url} target="_blank">{event.title}</a>
+        <span style={{fontSize: 29, weight: 'bold', marginBottom: 15, display: 'inline-block',  textTransform: 'uppercase'}}>{events[0].dayOfTheWeekPl}</span>
+        <span style={{color: 'gray', marginLeft: 10}}>{events[0].datePl}</span>
+        <ul style={{listStyleType: 'none', margin: 0, padding: 0, paddingTop: 15, borderTop: '3px solid black'}}>
+            {events.map(event => <li key={event.title} style={{padding: 5, marginBottom: 8}}>
+                <span style={{backgroundColor: 'yellow', color: 'black'}}>{event.hourPl}</span>
+                <a style={{marginLeft: 13}} href={event.url} target="_blank">{event.title}
+                <span style={{color: 'gray', marginLeft: 13}}>{event.venue}</span></a>
             </li>)}
         </ul>
     </div>

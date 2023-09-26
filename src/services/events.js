@@ -23,7 +23,6 @@ export const fetchEventsGroupedByDates = async () => {
 
     const documents = pipe(
         groupBy(prop('datePl')),
-        tap(console.log),
     )(snapshot.docs.map(pipe(
         doc => ({id: doc.id, ...doc.data()}),
         el => ({
