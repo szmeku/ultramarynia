@@ -43,3 +43,4 @@ playwright/.auth
 ./browser-session.json
 ./service-key.json
 ./secrets.json
+.env

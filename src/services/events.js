@@ -1,8 +1,12 @@
 import {pipe, tap, groupBy, prop} from "ramda";
 const {Firestore} = require('@google-cloud/firestore');
 
+const credentials = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT2);
+
 const firestore = new Firestore({
-    keyFilename: './service-key.json',
+    projectId: credentials.project_id,
+    credentials,
+
 });
 
 import moment from 'moment';

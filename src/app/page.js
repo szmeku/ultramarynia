@@ -1,5 +1,5 @@
-import {pipe, values} from "ramda";
 import {fetchEventsGroupedByDates} from "@/services/events";
+import {pipe, values} from "ramda";
 
 const EventsGroup = ({events, light}) => {
 
