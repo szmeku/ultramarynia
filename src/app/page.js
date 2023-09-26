@@ -5,7 +5,7 @@ const EventsGroup = ({events, light}) => {
 
     const backgroundColor = light ? '#f2f2f2' : '#e6e6e6';
 
-    return <div style={{backgroundColor, padding: 10}}>
+    return <div style={{backgroundColor, padding: 10, color: 'black'}}>
         <span style={{fontSize: 20, weight: 'bold'}}>{events[0].dayOfTheWeekPl}</span> {events[0].datePl}
         <ul style={{listStyleType: 'none', margin: 0, padding: 0}}>
             {events.map(event => <li key={event.title} style={{padding: 5}}>
