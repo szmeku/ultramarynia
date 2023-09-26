@@ -21,7 +21,7 @@ const functions = [
                     "type": "array",
                     "items": {
                         "type": "object",
-                        "required": ["date", "time", "city", "venue", "eventName"],
+                        "required": ["dateAndTime", "city", "venue", "title", "description", "category", "url"],
                         "properties": {
                             "dateAndTime": {
                                 "type": "string",
@@ -43,6 +43,10 @@ const functions = [
                             },
                             "category": {
                                 "type": "string"
+                            },
+                            "url": {
+                                "description": "url to the event",
+                                "type": "string"
                             }
                         }
                     }
@@ -62,7 +66,7 @@ module.exports = {
                 {
                     role: "user",
                     "content": `Generate fake list of 50 events for coming week, response in json with structure
-                        this fake city has limited number of venues so they should repeat for different events. `
+                        this fake city has limited number of venues so they should repeat for different events. There have to be at least 10 different dates and 4 events per date.`
                 },
             ],
             functions,

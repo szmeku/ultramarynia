@@ -12,3 +12,4 @@ generateFakeEvents()
     .then(map(async (event) => {
         return await docRef.add(event)
     }))
+    .catch((err) => console.log(err))
