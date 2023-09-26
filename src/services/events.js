@@ -23,8 +23,9 @@ export const fetchEventsGroupedByDates = async () => {
     )(snapshot.docs.map(pipe(
         doc => ({id: doc.id, ...doc.data()}),
         el => ({
-            dayOfTheWeekPl: moment(el.dateAndTime._seconds*1000).format('dddd'),
-            datePl: moment(el.dateAndTime._seconds*1000).format('DD-MM-YYYY'),
+            dayOfTheWeekPl: moment(el.dateAndTime).format('dddd'),
+            datePl: moment(el.dateAndTime).format('DD-MM-YYYY'),
+            hourPl: moment(el.dateAndTime).format('HH:mm'),
         ...el})
     )));
 
