@@ -14,7 +14,7 @@ const convertToPlainObject = v => ({...v});
 
 deleteFirestoreEvents(firestore).then(() => pipe(
     pluck('url'),
-    take(5), // just for testing
+    // take(1), // just for testing
     v => Promise.mapSeries(v, fetchFBEventsForVenue),
     tap(andThen(v => {
         console.log('DODODODODOD before concat length', v.length);

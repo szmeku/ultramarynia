@@ -22,12 +22,15 @@ const scrollToBottom = async (page) => {
         await new Promise((resolve) => {
             let totalHeight = 0;
             const distance = 100;
+            let count = 0;
             const timer = setInterval(() => {
+                count += 1;
+
                 const scrollHeight = document.body.scrollHeight;
                 window.scrollBy(0, distance);
                 totalHeight += distance;
 
-                if (totalHeight >= scrollHeight) {
+                if (totalHeight >= scrollHeight || count > 25) {
                     clearInterval(timer);
                     resolve();
                 }
