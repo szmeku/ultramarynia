@@ -8,8 +8,8 @@ const dateToGoogleCalendarDate = (rawDate) => {
     const date = moment(rawDate);
     const endDate = date.clone().add(1, 'hours');
 
-    const formattedStartDate = date.utc().format("YYYYMMDDTHHmmss") + "Z";
-    const formattedEndDate = endDate.utc().format("YYYYMMDDTHHmmss") + "Z";
+    const formattedStartDate = date.utc(true).format("YYYYMMDDTHHmmss");
+    const formattedEndDate = endDate.utc(true).format("YYYYMMDDTHHmmss");
 
     return `${formattedStartDate}/${formattedEndDate}`;
 }
