@@ -8,22 +8,25 @@ const openai = new OpenAI({
     apiKey: secrets.openai,
 });
 
-
 const functions = [
     gptEventsCallbackFunction
 ]
 
+const moment = require('moment');
+
 module.exports = {
-    generateFakeEvents: pipe(
+    extractEventsFromStrings: pipe(
         map(v => `"${v}"\n`),
         v => openai.chat.completions.create({
             model: "gpt-3.5-turbo-0613",
             messages: [
-                {role: "system", "content": "You are helpful fake events generator"},
+                {role: "system", "content": "You are helpful events from text extractor"},
                 {
                     role: "user",
-                    "content": `Generate fake list of 30 events for coming week, response in json with structure
-                        this fake city has limited number of venues so they should repeat for different events. There have to be at least 4 different dates and 4 events per date.`
+                    "content": `From following strings extract events and run proper callback function.
+                    Please remember that dateAndTime of the event should be in this format 'YYYY-MM-DDTHH:mm:ss'.
+                    Assume that today is ${moment().format('YYYY-MM-DD, dddd')}, this is really important for extracting date.
+                    Also for every event decide about a category, one from ['music', 'film', 'health', 'art', 'theater', 'other'] \n\n ${v}`
                 },
             ],
             functions,

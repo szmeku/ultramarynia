@@ -4,8 +4,12 @@
 }
 
 .eventsGroup li > a, .eventsGroup li > span{
-    display: inline-block;
     margin-left: 13px;
+    line-height: 23px;
+}
+
+.eventsGroup li > a:first-child, .eventsGroup li > span:first-child{
+    margin-left: 0;
 }
 
 .eventsGroup .lighter{
