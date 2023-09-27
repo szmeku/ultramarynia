@@ -25,5 +25,8 @@
     "react-bootstrap": "^2.8.0",
     "react-dom": "18.2.0",
     "styled-components": "^6.0.8"
+  },
+  "devDependencies": {
+    "puppeteer": "^21.3.5"
   }
 }

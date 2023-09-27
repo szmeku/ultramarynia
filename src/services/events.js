@@ -1,4 +1,4 @@
-import {pipe, tap, groupBy, prop} from "ramda";
+import {pipe, groupBy, prop} from "ramda";
 const {Firestore} = require('@google-cloud/firestore');
 
 const credentials = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT2);
@@ -15,13 +15,13 @@ moment.locale('pl');
 
 export const fetchEventsGroupedByDates = async () => {
     const snapshot = await firestore
-        .collection('fakeEvents')
+        .collection('events')
         // todo: this date is just for tests, should be "yesterday midnight" (very important at 20.30 i want to see events also that started at 20)
         // .where('dateAndTime', '>', new Date('2022-02-10'))
         .orderBy("dateAndTime", "asc")
         .get();
 
-    const documents = pipe(
+    return pipe(
         groupBy(prop('datePl')),
     )(snapshot.docs.map(pipe(
         doc => ({id: doc.id, ...doc.data()}),
@@ -31,6 +31,4 @@ export const fetchEventsGroupedByDates = async () => {
             hourPl: moment(el.dateAndTime).format('HH:mm'),
         ...el})
     )));
-
-    return documents;
 }
