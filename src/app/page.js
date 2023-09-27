@@ -21,10 +21,10 @@ const Event = ({event}) => {
     //  &location=Location
 
     return <li key={event.title} style={{padding: 5, marginBottom: 8}}>
-        <span className="hourChip">{event.hourPl}</span>
-        <a href={addToCalendarUrl} target="_blank">📅</a>
-        <a href={event.url} target="_blank">{event.title}</a>
-        <span className="lighter">{event.venue}</span>
+        <span className="hourChip">{event.hourPl}</span>&nbsp;&nbsp;
+        <a href={addToCalendarUrl} target="_blank">📅</a>&nbsp;&nbsp;
+        <a href={event.url} target="_blank">{event.title}</a>&nbsp;&nbsp;
+        <span className="lighter">{event.venue}</span>&nbsp;&nbsp;
         <span className="lighter">{event.category}</span>
     </li>
 }
