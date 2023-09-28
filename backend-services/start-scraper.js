@@ -36,7 +36,7 @@ deleteFirestoreEvents(firestore).then(() => pipe(
 
         return map(pipe(
             convertToPlainObject,
-            uniqBy(v => `${v.dateAndTime}||${v.venue}||${v.title}`),
+            uniqBy(v => `${v.datePl}||${v.hourPl}||${v.venue}||${v.title}`),
             v => collection.add(v),
         ))(items)
     }),

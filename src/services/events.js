@@ -1,4 +1,4 @@
-import {pipe, groupBy, prop, uniqBy} from "ramda";
+import {pipe, groupBy, prop, uniqBy, trim} from "ramda";
 const {Firestore} = require('@google-cloud/firestore');
 
 const credentials = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT2);
@@ -23,7 +23,7 @@ export const fetchEventsGroupedByDates = async () => {
         .get();
 
     return pipe(
-        uniqBy(v => `${v.dateAndTime}||${v.venue}||${v.title}`),
+        uniqBy(v => `${v.datePl}||${v.hourPl}||${v.venue}||${v.title}`),
         groupBy(prop('datePl')),
     )(snapshot.docs.map(pipe(
         doc => ({id: doc.id, ...doc.data()}),
