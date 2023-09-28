@@ -16,10 +16,16 @@
 }
 
 .eventsGroup .hourChip{
-    width: 46px;
+    width: 44px;
     text-align: center;
     background-color: yellow;
     color: black;
+    display: inline-block;
+    margin-right: 2px;
+}
+
+.eventsGroup .save{
+    vertical-align: middle;
 }
 
 .main{
