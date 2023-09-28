@@ -1,5 +1,5 @@
 const eventSources = require('../data/eventSources.json');
-const {pipe, pluck, map, take, andThen, otherwise, flatten, tap} = require("ramda");
+const {pipe, pluck, map, take, andThen, otherwise, flatten, tap, uniqBy} = require("ramda");
 const {fetchFBEventsForVenue} = require("./lib/fetchFacebookEvents");
 const {Firestore} = require("@google-cloud/firestore");
 const Promise = require('bluebird')
@@ -36,6 +36,7 @@ deleteFirestoreEvents(firestore).then(() => pipe(
 
         return map(pipe(
             convertToPlainObject,
+            uniqBy(v => `${v.dateAndTime}||${v.venue}||${v.title}`),
             v => collection.add(v),
         ))(items)
     }),
