@@ -35,7 +35,7 @@ const EventsGroup = ({events, light}) => {
 
     return <div className="eventsGroup" style={{backgroundColor}}>
         <span style={{fontSize: 29, weight: 'bold', marginBottom: 15, display: 'inline-block',  textTransform: 'uppercase'}}>{events[0].dayOfTheWeekPl}</span>
-        <span style={{color: 'gray', marginLeft: 10}}>{events[0].datePl}</span>
+        <span className="date" style={{marginLeft: 10}}>{events[0].datePl}</span>
         <ul style={{listStyleType: 'none', margin: 0, padding: 0, paddingTop: 15, borderTop: '3px solid black'}}>
             {events.map(event => <Event key={event.title} event={event}/>)}
         </ul>
@@ -49,7 +49,15 @@ export default async function Home() {
     const eventsGroupedByDate = await fetchEventsGroupedByDates()
 
     return (
-        <div>
+        <div className={"main"}>
+            <div className="top-info">
+                {/*<img src="logo.png" alt="Kato Kult"/>*/}
+                <h1>Kato Kult</h1>
+                <div className="disclaimer">
+                    <p>Agregator wydarzeń kulturalnych w Katowicach.</p>
+                    <a target="_blank" href={"https://www.facebook.com/permalink.php?story_fbid=pfbid02FGiF5Lm1tNTVLytkB1TUyXxf8MJEhkSrDFFYeN9kzGjVpWUfqwJ1gTcCFsBaSQhwl&id=61551928588592&__cft__[0]=AZUNh--sPO_JfYI_2nRFEXkeY9igDfsIpo6wtfP9-1-OQKVrJNli_JbAnnzKUUi1vUmgWMY7tYmed7U6UrrvYcruEJq7Kw18Is9fkRHqDyyRqHUmIa5WBhVWbUDSJ4Kcr8fN4VKcPFy7NtadB34sTGci&__tn__=%2CO%2CP-R"}>Pomóż, ponarzekaj, zgłoś buga.</a>
+                </div>
+            </div>
             {pipe(
                 values,
                 v => v.map((events, index) =>  <EventsGroup key={index} events={events} light={!!(index % 2)}/>),

@@ -21,3 +21,29 @@
     background-color: yellow;
     color: black;
 }
+
+.main{
+    background: #f5f5f5;
+}
+
+.top-info{
+    padding: 10px;
+    margin-bottom:20px;
+}
+
+.top-info .disclaimer{
+    opacity: 0.8;
+    font-size: 12px;
+    margin-top: 8px;
+    margin-left: 2px;
+    line-height: 20px;
+}
+.top-info .disclaimer a{
+    text-underline: single;
+    color: cadetblue;
+}
+
+
+.date{
+    color: #343434;
+}
