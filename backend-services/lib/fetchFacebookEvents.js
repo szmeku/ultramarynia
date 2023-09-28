@@ -12,7 +12,7 @@ const {
     flatten,
     zipWith,
     apply,
-    otherwise
+    otherwise, replace
 } = require("ramda");
 const {extractEventsFromStrings} = require("./extractEventsFromStrings");
 const Promise = require('bluebird');
@@ -67,7 +67,8 @@ const fetchRawEventsFromFBUrl = pipe(
 
         return map(v => ({
             ...v,
-            source: venueEventsUrl
+            source: venueEventsUrl,
+            text: replace("Wydarzenie ", "", v.text),
         }))(result);
     },
     otherwise(v => {
