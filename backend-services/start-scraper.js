@@ -4,7 +4,7 @@ const {fetchFBEventsForVenue} = require("./lib/fetchFacebookEvents");
 const {Firestore} = require("@google-cloud/firestore");
 const Promise = require('bluebird')
 const {deleteFirestoreEvents} = require("./lib/deleteFirestoreEvents");
-
+const {netlifyBuildHook} = require('../secrets.json');
 
 const firestore = new Firestore({
     keyFilename: '../service-key.json',
@@ -28,6 +28,7 @@ deleteFirestoreEvents(firestore).then(() => pipe(
     tap(andThen(v => {
         console.log('DODODODODOD after series length', v.length);
     })),
+    andThen(uniqBy(v => `${v.datePl}||${v.hourPl}||${v.venue}||${v.title}`)),
     andThen((items)  => {
 
         const collection = firestore.collection('events')
@@ -36,14 +37,19 @@ deleteFirestoreEvents(firestore).then(() => pipe(
 
         return map(pipe(
             convertToPlainObject,
-            uniqBy(v => `${v.datePl}||${v.hourPl}||${v.venue}||${v.title}`),
             v => collection.add(v),
         ))(items)
     }),
     v => Promise.all(v),
-    otherwise((err) => console.log(err)),
     andThen(() => {
         console.log('Data scraped and saved!')
+        return fetch(netlifyBuildHook, {method: 'POST'}).then(() => console.log('Netlify build hook fired!'));
+    }),
+    andThen(() => process.exit()),
+    otherwise((err) => {
+        console.log(err)
+        process.exit()
     })
+
 )(eventSources))
 

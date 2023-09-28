@@ -23,7 +23,6 @@ export const fetchEventsGroupedByDates = async () => {
         .get();
 
     return pipe(
-        uniqBy(v => `${v.datePl}||${v.hourPl}||${v.venue}||${v.title}`),
         groupBy(prop('datePl')),
     )(snapshot.docs.map(pipe(
         doc => ({id: doc.id, ...doc.data()}),
