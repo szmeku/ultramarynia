@@ -18,8 +18,8 @@ export const fetchEventsGroupedByDates = async () => {
     const snapshot = await firestore
         .collection('events')
         // .where('dateAndTime', '<', new Date(twoWeeksFromNow))
-        .limit(200) // todo: should be replaced with 2 weeks limit
         .orderBy("dateAndTime", "asc")
+        .limit(200) // todo: should be replaced with 2 weeks limit
         .get();
 
     return pipe(
