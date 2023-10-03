@@ -22,12 +22,9 @@ const repeatUntilTrue = (fn) => fn()
     })
 
 const testWebsite = () => {
-    return fetch('https://katokult.pl').then(v => v.text()).then(v => {
-
-        console.log('v', v)
-
-        return v.includes('piątek')
-    })
+    return fetch('https://katokult.pl')
+        .then(v => v.text())
+        .then(v => v.includes('piątek'))
 }
 
 const convertToPlainObject = v => ({...v});
