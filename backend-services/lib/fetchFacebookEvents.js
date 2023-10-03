@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-
+const path = require('path')
 const {browserWSEndpoint} = require('../browser-session.json');
 const {
     pipe,
@@ -12,7 +12,7 @@ const {
     flatten,
     zipWith,
     apply,
-    otherwise, replace
+    otherwise, replace, tap, when, isEmpty, prop
 } = require("ramda");
 const {extractEventsFromStrings} = require("./extractEventsFromStrings");
 const Promise = require('bluebird');
@@ -39,6 +39,13 @@ const scrollToBottom = async (page) => {
     });
 }
 
+function normalizeUrlForFilename(inputUrl) {
+    const parsedUrl = new URL(inputUrl);
+    const normalizedPath = path.normalize(parsedUrl.hostname + parsedUrl.pathname);
+    return normalizedPath.replace(/[^a-zA-Z0-9]/g, '_');
+}
+
+
 const fetchRawEventsFromFBUrl = pipe(
     v => v + '/upcoming_hosted_events',
     async (venueEventsUrl) => {
@@ -62,6 +69,12 @@ const fetchRawEventsFromFBUrl = pipe(
                 text: a.parentElement.parentElement.textContent,
             })
         ));
+
+        if (isEmpty(result)) {
+
+            const filename = './pagesWithNoEvents/' + normalizeUrlForFilename(venueEventsUrl) + '.png';
+            await page.screenshot({ path: filename, fullPage: true });
+        }
 
         await page.close();
 
