@@ -9,8 +9,6 @@ const {netlifyBuildHook} = require('../secrets.json');
 const firestore = new Firestore({
     keyFilename: '../service-key.json',
 });
-fetch(netlifyBuildHook, {method: 'POST'}).then(v => console.log(v))
-
 
 const repeatUntilTrue = (fn) => fn()
     .then(v => {
@@ -22,7 +20,6 @@ const repeatUntilTrue = (fn) => fn()
             return repeatUntilTrue(fn)
         }
     })
-
 
 const testWebsite = () => {
     return fetch('https://katokult.pl').then(v => v.text()).then(v => {
