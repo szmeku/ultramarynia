@@ -46,7 +46,7 @@ function normalizeUrlForFilename(inputUrl) {
 }
 
 
-const fetchRawEventsFromFBUrl = pipe(
+const fetchRawEventsFromFBUrl = (pagesWithoutEventsPath) => pipe(
     v => v + '/upcoming_hosted_events',
     async (venueEventsUrl) => {
         const browser = await puppeteer.connect({browserWSEndpoint, defaultViewport: null,});
@@ -72,7 +72,7 @@ const fetchRawEventsFromFBUrl = pipe(
 
         if (isEmpty(result)) {
 
-            const filename = './pagesWithNoEvents/' + normalizeUrlForFilename(venueEventsUrl) + '.png';
+            const filename = pagesWithoutEventsPath + '/' + normalizeUrlForFilename(venueEventsUrl) + '.png';
             await page.screenshot({ path: filename, fullPage: true });
         }
 
@@ -90,8 +90,8 @@ const fetchRawEventsFromFBUrl = pipe(
     })
 );
 
-const fetchFBEventsForVenue = pipe(
-    fetchRawEventsFromFBUrl,
+const fetchFBEventsForVenue = (pagesWithoutEventsPath) => pipe(
+    fetchRawEventsFromFBUrl(pagesWithoutEventsPath),
     andThen(juxt([
         // todo: split could be put at the top for better performance
         pipe(pluck('text'), splitEvery(5), map(extractEventsFromStrings), Promise.all, andThen(flatten)),

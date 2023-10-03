@@ -29,53 +29,77 @@ const testWebsite = () => {
 
 const convertToPlainObject = v => ({...v});
 
-pipe(
-    pluck('url'),
-    // take(1), // just for testing
-    v => Promise.mapSeries(v, fetchFBEventsForVenue),
-    tap(andThen(v => {
-        console.log('DODODODODOD before concat length', v.length);
 
-        v.map((v, index) => {
-            console.log(index, 'DODODODODOD after series length', v.length);
-        }, v)
-    })),
-    v => Promise.all(v),
-    andThen(flatten),
-    tap(andThen(v => {
-        console.log('DODODODODOD after series length', v.length);
-    })),
-    andThen(uniqBy(v => `${v.datePl}||${v.hourPl}||${v.venue}||${v.title}`)),
-    andThen((items) => {
+const fs = require('fs').promises;
 
-        if (items.length > 0) {
-            return deleteFirestoreEvents(firestore).then(() => {
-                const collection = firestore.collection('events');
+async function recreateFolder(folderPath) {
+    try {
+        await fs.rm(folderPath, { recursive: true, force: true });
+    } catch (error) {
+        // Handle error if needed, e.g., log it
+        console.error(error);
+    }
+    try {
+        await fs.mkdir(folderPath, { recursive: true });
+    } catch (error) {
+        // Handle error if needed, e.g., log it
+        console.error(error);
+    }
+}
 
-                console.log('DODODODODOD all events length', items.length)
+(async () => {
 
-                return map(pipe(
-                    convertToPlainObject,
-                    v => collection.add(v),
-                ))(items)
-            })
-        } else {
-            throw Error("didn't downloaded any events")
-        }
-    }),
-    v => Promise.all(v),
-    andThen(() => {
-        console.log('Data scraped and saved!')
+    const  pagesWithoutEventsPath = './pagesWithNoEvents';
+    await recreateFolder(pagesWithoutEventsPath)
 
-        return repeatUntilTrue(
-            () => fetch(netlifyBuildHook, {method: 'POST'})
-                .then(() => Promise.delay(120000))
-                .then(() => testWebsite())
-        )
-    }),
-    andThen(() => process.exit()),
-    otherwise((err) => {
-        console.log(err)
-        process.exit()
-    })
-)(eventSources)
+    pipe(
+        pluck('url'),
+        // take(1), // just for testing
+        v => Promise.mapSeries(v, fetchFBEventsForVenue(pagesWithoutEventsPath)),
+        tap(andThen(v => {
+            console.log('DODODODODOD before concat length', v.length);
+
+            v.map((v, index) => {
+                console.log(index, 'DODODODODOD after series length', v.length);
+            }, v)
+        })),
+        v => Promise.all(v),
+        andThen(flatten),
+        tap(andThen(v => {
+            console.log('DODODODODOD after series length', v.length);
+        })),
+        andThen(uniqBy(v => `${v.datePl}||${v.hourPl}||${v.venue}||${v.title}`)),
+        andThen((items) => {
+
+            if (items.length > 0) {
+                return deleteFirestoreEvents(firestore).then(() => {
+                    const collection = firestore.collection('events');
+
+                    console.log('DODODODODOD all events length', items.length)
+
+                    return map(pipe(
+                        convertToPlainObject,
+                        v => collection.add(v),
+                    ))(items)
+                })
+            } else {
+                throw Error("didn't downloaded any events")
+            }
+        }),
+        v => Promise.all(v),
+        andThen(() => {
+            console.log('Data scraped and saved!')
+
+            return repeatUntilTrue(
+                () => fetch(netlifyBuildHook, {method: 'POST'})
+                    .then(() => Promise.delay(120000))
+                    .then(() => testWebsite())
+            )
+        }),
+        andThen(() => process.exit()),
+        otherwise((err) => {
+            console.log(err)
+            process.exit()
+        })
+    )(eventSources)
+})();
