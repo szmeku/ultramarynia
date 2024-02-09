@@ -26,6 +26,7 @@
 
 # In progress
 - prepare prototype of UI for events
+
 - 
 
 # Done
