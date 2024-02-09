@@ -15,11 +15,12 @@ moment.locale('pl');
 // const twoWeeksFromNow = moment().add(2, 'weeks').format('YYYY-MM-DD');
 
 export const fetchEventsGroupedByDates = async () => {
+    const yesterday = moment().subtract(1, 'days').startOf('day').format(); // Format as needed
+
     const snapshot = await firestore
         .collection('events')
-        // .where('dateAndTime', '<', new Date(twoWeeksFromNow))
+        .where('dateAndTime', '>', yesterday)
         .orderBy("dateAndTime", "asc")
-        .limit(200) // todo: should be replaced with 2 weeks limit
         .get();
 
     return pipe(
