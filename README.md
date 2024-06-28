@@ -2,7 +2,10 @@
 
 1. Run the command: `node backend-services/start-scraper-browser.js`
 2. A window will open. Use it to go to facebook.com and sign in.
-3. Move `crontab.md` to your crontab folder.
+1. run crontab -e and put it there
+```bash
+00 15 * * * cd /home/szmeku/projects/ultramarynia/backend-services && /usr/local/bin/node start-scraper.js | logger -t katokult 
+```
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
