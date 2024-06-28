@@ -1,3 +1,10 @@
+## How to run scrapper
+
+1. node backend-services/start-scraper-browser.js
+2. browser will be open, use it to go to facebook.com and sign in
+3. put crontab.md in your crontab folder
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
