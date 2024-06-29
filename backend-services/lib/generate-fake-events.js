@@ -17,7 +17,7 @@ module.exports = {
     generateFakeEvents: pipe(
         map(v => `"${v}"\n`),
         v => openai.chat.completions.create({
-            model: "gpt-3.5-turbo-0613",
+            model: "gpt-3.5-turbo",
             messages: [
                 {role: "system", "content": "You are helpful fake events generator"},
                 {

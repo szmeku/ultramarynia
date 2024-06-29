@@ -6,6 +6,7 @@ const {gptEventsCallbackFunction} = require("./gptEventsCallbackFunction");
 
 const openai = new OpenAI({
     apiKey: secrets.openai,
+    organization: 'org-Jm9R3zUcqBMp6rcMHD4bdKHH',
 });
 
 const functions = [
@@ -18,7 +19,7 @@ module.exports = {
     extractEventsFromStrings: pipe(
         map(v => `"${v}"\n`),
         v => openai.chat.completions.create({
-            model: "gpt-3.5-turbo-0613",
+            model: "gpt-3.5-turbo",
             messages: [
                 {role: "system", "content": "You are helpful events from text extractor"},
                 {

@@ -134,7 +134,7 @@ const fetchFBEventsForVenue = (pagesWithoutEventsPath) => pipe(
     fetchRawEventsFromFBUrl(pagesWithoutEventsPath),
     andThen(juxt([
         // todo: split could be put at the top for better performance
-        pipe(pluck('text'), splitEvery(5), map(extractEventsFromStrings), Promise.all, andThen(flatten)),
+        pipe(pluck('text'), extractEventsFromStrings),
         identity,
     ])),
     Promise.all,

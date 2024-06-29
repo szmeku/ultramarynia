@@ -7,7 +7,7 @@ const {deleteFirestoreEvents} = require("./lib/deleteFirestoreEvents");
 const {netlifyBuildHook} = require('../secrets.json');
 
 const firestore = new Firestore({
-    keyFilename: '../service-key.json',
+    keyFilename: './service-key.json',
 });
 
 const repeatUntilTrue = (fn) => fn()
