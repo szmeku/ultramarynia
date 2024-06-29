@@ -6,7 +6,7 @@ const puppeteer = require('puppeteer');
 (async () => {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox', '--start-maximized'],
-        headless: false,
+        headless: true,
         defaultViewport: null,
     });
     const browserWSEndpoint = browser.wsEndpoint();
