@@ -1,6 +1,6 @@
 1. run crontab -e and put it there
 ```bash
-00 15 * * * cd /home/szmeku/projects/ultramarynia/backend-services && /usr/local/bin/node start-scraper.js | logger -t katokult 
+00 15 * * * cd /folder-with-secrets && /usr/local/bin/node start-scraper.js | logger -t katokult 
 ```
 
 2. debug 

@@ -79,7 +79,6 @@ const fetchRawEventsFromFBUrl = (browserWSEndpoint, pagesWithoutEventsPath) => p
         }
 
         try {
-            // Wait for a dialog with role="dialog" to appear
             await page.waitForSelector('[role="dialog"]', { timeout: 2000 });
 
             // Click the first element inside the dialog
@@ -96,6 +95,7 @@ const fetchRawEventsFromFBUrl = (browserWSEndpoint, pagesWithoutEventsPath) => p
                 console.log('Dialog with role="dialog" not found.');
             }
         } catch (error) {
+            console.error('TIMEOUT FOR DIALOG IS OK');
             console.error('Error:', error);
         }
 
