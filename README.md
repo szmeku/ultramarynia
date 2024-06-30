@@ -3,8 +3,8 @@
 2. download katokult-scrapper.tar and run `docker load -i katokult-scrapper.tar`
 3. Test if works running  `docker run -v ./:/app katokult-scrapper`
 4. Add to crontab running this
-run command and paste the thing below `crontab -e`
-`00 15 * * * cd /folder-with-secrets && docker run -v ./:/app katokult-scrapper | logger -t katokult`
+run `crontab -e` and paste the thing below
+- `00 15 * * * cd /folder-with-secrets && docker run -v ./:/app katokult-scrapper | logger -t katokult`
 
 ## How to run scrapper
 
