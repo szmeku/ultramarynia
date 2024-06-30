@@ -40,8 +40,6 @@ next-env.d.ts
 /playwright-report/
 /playwright/.cache/
 playwright/.auth
-./browser-session.json
 ./service-key.json
 ./secrets.json
 .env
-browser-session.json

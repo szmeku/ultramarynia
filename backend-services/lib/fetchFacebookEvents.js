@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 const path = require('path')
-const {browserWSEndpoint} = require('../browser-session.json');
 const {
     pipe,
     map,
@@ -46,7 +45,7 @@ function normalizeUrlForFilename(inputUrl) {
 }
 
 
-const fetchRawEventsFromFBUrl = (pagesWithoutEventsPath) => pipe(
+const fetchRawEventsFromFBUrl = (browserWSEndpoint, pagesWithoutEventsPath) => pipe(
     v => v + '/upcoming_hosted_events',
     async (venueEventsUrl) => {
         const browser = await puppeteer.connect({browserWSEndpoint, defaultViewport: null,});
@@ -81,7 +80,7 @@ const fetchRawEventsFromFBUrl = (pagesWithoutEventsPath) => pipe(
 
         try {
             // Wait for a dialog with role="dialog" to appear
-            await page.waitForSelector('[role="dialog"]', { timeout: 1000 });
+            await page.waitForSelector('[role="dialog"]', { timeout: 2000 });
 
             // Click the first element inside the dialog
             const dialog = await page.$('[role="dialog"]');
@@ -130,8 +129,8 @@ const fetchRawEventsFromFBUrl = (pagesWithoutEventsPath) => pipe(
     })
 );
 
-const fetchFBEventsForVenue = (pagesWithoutEventsPath) => pipe(
-    fetchRawEventsFromFBUrl(pagesWithoutEventsPath),
+const fetchFBEventsForVenue = (browserWSEndpoint, pagesWithoutEventsPath) => pipe(
+    fetchRawEventsFromFBUrl(browserWSEndpoint, pagesWithoutEventsPath),
     andThen(juxt([
         // todo: split could be put at the top for better performance
         pipe(pluck('text'), extractEventsFromStrings),
