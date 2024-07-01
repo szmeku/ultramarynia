@@ -1,10 +1,10 @@
 ## How to run scrapper from files
 1. put in current folder secrets.json & service-key.json
 2. download katokult-scrapper.tar and run `docker load -i katokult-scrapper.tar`
-3. Test if works running  `docker run -v ./:/app katokult-scrapper`
+3. Test if works running  `docker run -v ./secrets:/app/secrets/ katokult-scrapper`
 4. Add to crontab running this
 run `crontab -e` and paste the thing below
-- `00 15 * * * cd /folder-with-secrets && docker run -v ./:/app katokult-scrapper | logger -t katokult`
+- `00 15 * * * cd /folder-with-secrets && docker run -v ./:/app/secrets/ katokult-scrapper | logger -t katokult`
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

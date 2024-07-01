@@ -1,5 +1,5 @@
 # Stage 1: Build the Node.js environment
-FROM node:18.13.0 AS build
+FROM node:18.13.0
 
 WORKDIR /app
 

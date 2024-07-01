@@ -4,12 +4,12 @@ const {fetchFBEventsForVenue} = require("./lib/fetchFacebookEvents");
 const {Firestore} = require("@google-cloud/firestore");
 const Promise = require('bluebird')
 const {deleteFirestoreEvents} = require("./lib/deleteFirestoreEvents");
-const {netlifyBuildHook} = require('../secrets.json');
+const {netlifyBuildHook} = require('../secrets/secrets.json');
 const puppeteer = require("puppeteer");
 const {promises: fs_p} = require("fs");
 
 const firestore = new Firestore({
-    keyFilename: './service-key.json',
+    keyFilename: '.secrets/service-key.json',
 });
 
 (async function () {

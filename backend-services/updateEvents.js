@@ -1,7 +1,7 @@
 const {Firestore} = require("@google-cloud/firestore");
 const admin = require('firebase-admin');
 const firestore = new Firestore({
-    keyFilename: '../service-key.json',
+    keyFilename: '..secrets/service-key.json',
 });
 
 (async function(){

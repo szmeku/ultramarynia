@@ -1,5 +1,5 @@
 const OpenAI = require('openai');
-const secrets = require('../../secrets.json');
+const secrets = require('../../secrets/secrets.json');
 const {map, path, pipe, prop} = require('ramda');
 const {gptEventsCallbackFunction} = require("./gptEventsCallbackFunction");
 
