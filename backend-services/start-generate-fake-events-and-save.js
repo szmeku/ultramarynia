@@ -3,7 +3,7 @@ const {Firestore} = require('@google-cloud/firestore');
 const {map} = require("ramda");
 
 const firestore = new Firestore({
-    keyFilename: '..secrets/service-key.json',
+    keyFilename: '../secrets/service-key.json',
 });
 
 const docRef = firestore.collection('fakeEvents')
