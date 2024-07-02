@@ -9,7 +9,7 @@ const puppeteer = require("puppeteer");
 const {promises: fs_p} = require("fs");
 
 const firestore = new Firestore({
-    keyFilename: '.secrets/service-key.json',
+    keyFilename: './secrets/service-key.json',
 });
 
 (async function () {

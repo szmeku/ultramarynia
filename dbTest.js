@@ -1,10 +1,10 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('.secrets/service-key.json');
+const serviceAccount = require('./secrets/service-key.json');
 
 const { Firestore } = require('@google-cloud/firestore');
 
 const firestore = new Firestore({
-    keyFilename: '.secrets/service-key.json',
+    keyFilename: './secrets/service-key.json',
 });
 
 async function addData() {
