@@ -26,7 +26,7 @@ module.exports = {
                     role: "user",
                     "content": `From following strings extract events and run proper callback function.
                     Please remember that dateAndTime of the event should be in this format 'YYYY-MM-DDTHH:mm:ss'.
-                    Assume that today is ${moment().format('YYYY-MM-DD, dddd')}, this is really important for extracting date.
+                    Assume that today is ${moment().format('YYYY-MM-DD, dddd')}, this is really important for extracting date. If you notice duplicated events (same venue, time, date and super similar name) remove them (of course leave one).
                     Also for every event decide about a category, one from ['music', 'film', 'health', 'art', 'theater', 'other'] \n\n ${v}`
                 },
             ],
