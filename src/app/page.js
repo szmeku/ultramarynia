@@ -18,7 +18,8 @@ const Event = ({ event }) => {
         <li key={event.title}>
             <div className="hourChip">
                 <a target="_blank" href={addToCalendarUrl}>
-                <img src={'save.png'} alt={'calendar icon'} /></a>
+                    <img src={'save.png'} alt={'calendar icon'} />
+                </a>
                 &nbsp;{event.hourPl}
             </div>
             <a className="event-title" href={event.url} target="_blank">{event.title}</a>
