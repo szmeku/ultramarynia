@@ -40,6 +40,8 @@ module.exports = {
             .then(prop('events'))
             .catch((error) => {
                 console.log(error);
+
+                return []
             }),
     )
 }

@@ -72,6 +72,8 @@ const fetchRawEventsFromFBUrl = (browserWSEndpoint, pagesWithoutEventsPath) => p
             })
         ));
 
+        console.log(result)
+
         if (isEmpty(result)) {
 
             const filename = pagesWithoutEventsPath + '/' + normalizeUrlForFilename(venueEventsUrl) + '.png';
