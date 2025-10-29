@@ -19,7 +19,7 @@ module.exports = {
     extractEventsFromStrings: pipe(
         map(v => `"${v}"\n`),
         v => openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4.1-mini",
             messages: [
                 {role: "system", "content": "You are helpful events from text extractor"},
                 {
