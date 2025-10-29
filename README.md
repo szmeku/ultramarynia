@@ -1,7 +1,18 @@
+## How to use
+
+1. run separate docker with browser 
+```bash
+docker run -p 9221:9222 -v ./sessions:/app/sessions -v ./data:/app/data -v ./backend-services:/app/backend-services -v ./secrets:/app/secrets/ katokult-scraper node ./backend-services/start-scraper-browser.js
+```
+2. scrap
+```bash
+docker run --rm -v ./sessions:/app/sessions -v ./data:/app/data -v ./backend-services:/app/backend-services -v ./secrets:/app/secrets/ katokult-scraper node ./backend-services/start-scraper.js
+```
+
 ## How to run scrapper from files
 1. put in current folder secrets.json & service-key.json
 2. download katokult-scrapper.tar and run `docker load -i katokult-scrapper.tar`
-3. Test if works running  `docker run -v ./secrets:/app/secrets/ katokult-scrapper`
+3. Test if works running  `docker run -v ./secrets:/app/secrets/ katokult-scraper`
 4. Add to crontab running this
 run `crontab -e` and paste the thing below
 - `00 15 * * * cd /folder-with-secrets && docker run -v ./:/app/secrets/ katokult-scrapper | logger -t katokult`

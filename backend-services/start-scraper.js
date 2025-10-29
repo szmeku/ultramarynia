@@ -5,6 +5,7 @@ const {Firestore} = require("@google-cloud/firestore");
 const Promise = require('bluebird')
 const {deleteFirestoreEvents} = require("./lib/deleteFirestoreEvents");
 const {netlifyBuildHook} = require('../secrets/secrets.json');
+const {browserWSEndpoint: browserWSEndpointRaw} = require('../sessions/browser-session.json')
 const puppeteer = require("puppeteer");
 const {promises: fs_p} = require("fs");
 
@@ -12,14 +13,13 @@ const firestore = new Firestore({
     keyFilename: './secrets/service-key.json',
 });
 
-(async function () {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--start-maximized'],
-        headless: true,
-        defaultViewport: null,
-    });
-    const browserWSEndpoint = browser.wsEndpoint();
+const katokultUrl = 'https://elaborate-creponne-d04bff.netlify.app'
+// todo: bring back domain
+// const katokultUrl = 'https://katokult.pl'
 
+const browserWSEndpoint = browserWSEndpointRaw.replace("0.0.0.0:9222", "172.17.0.1:9221");
+
+(async function () {
     const repeatUntilTrue = (fn) => fn()
         .then(v => {
             if (v === true) {
@@ -32,7 +32,7 @@ const firestore = new Firestore({
         })
 
     const testWebsite = () => {
-        return fetch('https://katokult.pl')
+        return fetch(katokultUrl)
             .then(v => v.text())
             .then(v => v.includes('piątek'))
     }
@@ -59,6 +59,8 @@ const firestore = new Firestore({
 
         const pagesWithoutEventsPath = './pagesWithNoEvents';
         await recreateFolder(pagesWithoutEventsPath)
+
+        const browser = await puppeteer.connect({browserWSEndpoint, defaultViewport: null,});
 
         pipe(
             pluck('url'),
@@ -105,16 +107,14 @@ const firestore = new Firestore({
                 )
             }),
             andThen(() => {
-                browser.close().then(
-                    process.exit()
-                )
+                browser.disconnect()
+                console.log('FINISHED')
+                process.exit()
             }),
             otherwise((err) => {
                 console.log(err)
-
-                browser.close().then(
-                    process.exit()
-                )
+                browser.disconnect()
+                process.exit()
             })
         )(eventSources)
     })();

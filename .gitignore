@@ -42,3 +42,6 @@ next-env.d.ts
 playwright/.auth
 ./secrets
 .env
+secrets/service-key.json
+secrets.json
+sessions/
