@@ -13,7 +13,7 @@ const firestore = new Firestore({
     keyFilename: './secrets/service-key.json',
 });
 
-const katokultUrl = 'https://elaborate-creponne-d04bff.netlify.app'
+const katokultUrl = 'https://katokult.netlify.app'
 // todo: bring back domain
 // const katokultUrl = 'https://katokult.pl'
 
