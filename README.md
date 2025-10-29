@@ -8,6 +8,11 @@ docker run -p 9221:9222 -v ./sessions:/app/sessions -v ./data:/app/data -v ./bac
 ```bash
 docker run --rm -v ./sessions:/app/sessions -v ./data:/app/data -v ./backend-services:/app/backend-services -v ./secrets:/app/secrets/ katokult-scraper node ./backend-services/start-scraper.js
 ```
+2.2 schedule
+```bash
+pm2 start pm2_runner.js --cron "0 15 * * *" --name "ultramarynia-daily"
+```
+
 
 ## How to run scrapper from files
 1. put in current folder secrets.json & service-key.json
