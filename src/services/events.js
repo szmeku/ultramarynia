@@ -27,16 +27,10 @@ export const fetchEventsGroupedByDates = async () => {
         groupBy(prop('datePl')),
     )(snapshot.docs.map(pipe(
         doc => ({id: doc.id, ...doc.data()}),
-        el => {
-            // el.dateAndTime is Firestore Timestamp, convert to Date
-            const date = el.dateAndTime.toDate ? el.dateAndTime.toDate() : new Date(el.dateAndTime);
-            return {
-                dayOfTheWeekPl: moment(date).format('dddd'),
-                datePl: moment(date).format('DD-MM-YYYY'),
-                hourPl: moment(date).format('HH:mm'),
-                dateAndTime: date.toISOString(), // Send ISO string to client
-                ...el
-            };
-        }
+        el => ({
+            dayOfTheWeekPl: moment(el.dateAndTime).format('dddd'),
+            datePl: moment(el.dateAndTime).format('DD-MM-YYYY'),
+            hourPl: moment(el.dateAndTime).format('HH:mm'),
+        ...el})
     )));
 }

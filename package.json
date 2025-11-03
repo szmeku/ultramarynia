@@ -31,7 +31,6 @@
     "firebase": "^10.4.0",
     "firebase-admin": "^11.10.1",
     "moment": "^2.29.4",
-    "moment-timezone": "^0.6.0",
     "openai": "^4.52.2",
     "puppeteer": "^21.3.5",
     "ramda": "^0.29.0"

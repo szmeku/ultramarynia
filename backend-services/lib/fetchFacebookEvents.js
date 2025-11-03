@@ -94,9 +94,6 @@ const fetchRawEventsFromFBUrl = (browserWSEndpoint, pagesWithoutEventsPath) => p
     })
 );
 
-const moment = require('moment-timezone');
-const {Timestamp} = require('@google-cloud/firestore');
-
 const fetchFBEventsForVenue = (browserWSEndpoint, pagesWithoutEventsPath) => pipe(
     fetchRawEventsFromFBUrl(browserWSEndpoint, pagesWithoutEventsPath),
     andThen(juxt([
@@ -105,17 +102,10 @@ const fetchFBEventsForVenue = (browserWSEndpoint, pagesWithoutEventsPath) => pip
         identity,
     ])),
     Promise.all,
-    andThen(apply(zipWith((extractedEvent, rawEvent) => {
-        // Convert dateAndTime string to Firestore Timestamp (assuming Europe/Warsaw timezone)
-        const dateTimeInPoland = moment.tz(extractedEvent.dateAndTime, 'Europe/Warsaw');
-        const timestamp = Timestamp.fromDate(dateTimeInPoland.toDate());
-        
-        return {
-            ...extractedEvent,
-            ...rawEvent,
-            dateAndTime: timestamp,
-        };
-    }))),
+    andThen(apply(zipWith((extractedEvent, rawEvent) => ({
+        ...extractedEvent,
+        ...rawEvent,
+    })))),
 )
 
 module.exports = {
