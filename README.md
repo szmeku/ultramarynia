@@ -1,13 +1,25 @@
 ## How to use
 
-1. run separate docker with browser 
+1. **Start the browser container** (runs Chrome with remote debugging):
 ```bash
-docker run -p 9221:9222 -v ./sessions:/app/sessions -v ./data:/app/data -v ./backend-services:/app/backend-services -v ./secrets:/app/secrets/ katokult-scraper node ./backend-services/start-scraper-browser.js
+docker run -d -p 9221:9222 -v ./sessions:/app/sessions -v ./data:/app/data -v ./backend-services:/app/backend-services -v ./secrets:/app/secrets/ --name katokult-browser katokult-scraper node ./backend-services/start-scraper-browser.js
 ```
-2. scrap
+
+2. **Sign in to Facebook manually** (one-time setup):
+   - Open Chrome on your host machine
+   - Go to `chrome://inspect`
+   - Click "Configure" and add `localhost:9221` to the targets
+   - You should see the remote browser appear under "Remote Target"
+   - Click "inspect" to open DevTools
+   - You should see the Facebook login page - sign in with your credentials
+   - The session will be saved in the browser container
+
+3. **Run the scraper** (connects to the running browser):
 ```bash
-docker run --rm -v ./sessions:/app/sessions -v ./data:/app/data -v ./backend-services:/app/backend-services -v ./secrets:/app/secrets/ katokult-scraper node ./backend-services/start-scraper.js
+./scrap_and_rebuild.sh
 ```
+
+The scraper will automatically find the running browser container and use its WebSocket endpoint to connect and scrape events.
 2.2 schedule
 ```bash
 pm2 start pm2_runner.js --cron "0 15 * * *" --name "ultramarynia-daily"

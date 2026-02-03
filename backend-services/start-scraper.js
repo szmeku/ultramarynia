@@ -5,7 +5,6 @@ const {Firestore} = require("@google-cloud/firestore");
 const Promise = require('bluebird')
 const {deleteFirestoreEvents} = require("./lib/deleteFirestoreEvents");
 const {netlifyBuildHook} = require('../secrets/secrets.json');
-const {browserWSEndpoint: browserWSEndpointRaw} = require('../sessions/browser-session.json')
 const puppeteer = require("puppeteer");
 const {promises: fs_p} = require("fs");
 
@@ -17,7 +16,11 @@ const katokultUrl = 'https://katokult.netlify.app'
 // todo: bring back domain
 // const katokultUrl = 'https://katokult.pl'
 
-const browserWSEndpoint = browserWSEndpointRaw.replace("0.0.0.0:9222", "172.17.0.1:9221");
+// Use environment variable for browser WebSocket endpoint, fallback to session file for backward compatibility
+const browserWSEndpoint = process.env.BROWSER_WS_ENDPOINT || (() => {
+    const {browserWSEndpoint: browserWSEndpointRaw} = require('../sessions/browser-session.json');
+    return browserWSEndpointRaw.replace("0.0.0.0:9222", "172.17.0.1:9221");
+})();
 
 (async function () {
     const repeatUntilTrue = (fn) => fn()
@@ -60,7 +63,14 @@ const browserWSEndpoint = browserWSEndpointRaw.replace("0.0.0.0:9222", "172.17.0
         const pagesWithoutEventsPath = './pagesWithNoEvents';
         await recreateFolder(pagesWithoutEventsPath)
 
-        const browser = await puppeteer.connect({browserWSEndpoint, defaultViewport: null,});
+        let browser;
+        try {
+            browser = await puppeteer.connect({browserWSEndpoint, defaultViewport: null,});
+        } catch (err) {
+            console.error('Failed to connect to browser:', err.message);
+            console.error('Browser endpoint:', browserWSEndpoint);
+            process.exit(1);
+        }
 
         pipe(
             pluck('url'),
