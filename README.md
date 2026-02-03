@@ -22,7 +22,7 @@ docker run -d -p 9221:9222 -v ./sessions:/app/sessions -v ./data:/app/data -v ./
 The scraper will automatically find the running browser container and use its WebSocket endpoint to connect and scrape events.
 2.2 schedule
 ```bash
-pm2 start pm2_runner.js --cron "0 15 * * *" --name "ultramarynia-daily"
+pm2 start pm2_runner.js --cron "15 13 * * *" --name "ultramarynia-daily"
 ```
 
 
