@@ -30,8 +30,8 @@ async function login_and_save_browser_session(){
     await page.type("#pass", secrets.fb_pass);
     await page.click("[type='submit']");
 
-    await page.waitForXPath("//span[contains(text(), 'Jan Skoczynski')]");
-    console.log("Element found: Jan Skoczynski");
+    await page.waitForXPath("//span[contains(text(), 'Janek Koperwo')]");
+    console.log("Element found: Janek Koperwo");
 
     const browserWSEndpoint = browser.wsEndpoint();
     fs.writeFileSync('./sessions/browser-session.json', JSON.stringify({browserWSEndpoint}));
